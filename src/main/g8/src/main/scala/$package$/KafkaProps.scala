@@ -29,8 +29,6 @@ case class KafkaConfig(id: String,
                        schemaRegistry: SchemaRegistry,
                        sasl: Sasl)
 
-case class CaciConfig(env: String)
-
 trait KafkaProps {
 
   val kafkaConfig: KafkaConfig

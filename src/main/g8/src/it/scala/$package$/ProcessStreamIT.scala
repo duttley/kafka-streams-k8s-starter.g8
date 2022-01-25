@@ -2,7 +2,6 @@ package $package$
 
 import java.util
 import java.util.{Collections, Properties}
-import $package$.bigquery.BigQueryClient
 import $package$.testhelpers.Kafka
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.flatspec.AnyFlatSpec
@@ -12,7 +11,7 @@ import $package$.config.Config
 import $package$.utils.KafkaUtils
 import org.apache.kafka.clients.admin.AdminClient
 import org.slf4j.LoggerFactory
-import $package$.config.Address
+import $package$.avro.Address
 import collection.JavaConverters._
 
 class ProcessStreamIT extends AnyFlatSpec with Matchers with KafkaProps {
@@ -32,10 +31,6 @@ class ProcessStreamIT extends AnyFlatSpec with Matchers with KafkaProps {
     val inputData = Address("wef", "wef")
 
     val expectedOutput = Address("wef", "wef")// Add your expected output here
-
-    val bigQueryClient = BigQueryClient("devtest01")
-
-    val caciData = bigQueryClient.getCaciData("LA1 4DL").toOption.get
 
     val testStream = Main.streams
 

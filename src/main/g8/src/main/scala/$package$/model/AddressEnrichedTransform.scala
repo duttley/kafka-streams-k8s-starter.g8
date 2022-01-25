@@ -1,7 +1,6 @@
 package $package$.model
 
 import $package$.avro.{Address, AddressEnriched}
-import $package$.bigquery.BigQueryClient
 
 object AddressEnrichedTransform {
 

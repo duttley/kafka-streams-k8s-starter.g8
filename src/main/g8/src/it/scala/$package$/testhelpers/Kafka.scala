@@ -8,8 +8,8 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 import java.util.Collections
 import $package$.KafkaProps
 import $package$.config.Config
-import $package$.config.Address
-import $package$.testhelpers.Kafka.kafkaProps
+import $package$.avro.Address
+import $package$.KafkaProps
 
 object Kafka extends KafkaProps {
 

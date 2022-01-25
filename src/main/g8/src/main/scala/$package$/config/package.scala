@@ -2,7 +2,7 @@ package $package$
 
 package object config {
 
-  case class Config(kafka: KafkaConfig, caci: CaciConfig)
+  case class Config(kafka: KafkaConfig)
 
   object Config {
     import pureconfig._
