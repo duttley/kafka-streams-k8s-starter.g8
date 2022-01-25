@@ -8,7 +8,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 import java.util.Collections
 import $package$.KafkaProps
 import $package$.config.Config
-import $package$.avro.Address
+import $package$.avro.{Address, AddressEnriched}
 import $package$.KafkaProps
 
 object Kafka extends KafkaProps {
