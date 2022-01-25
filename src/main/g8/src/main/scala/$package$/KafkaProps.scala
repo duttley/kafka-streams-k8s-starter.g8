@@ -18,7 +18,7 @@ import org.apache.kafka.common.serialization.{
 }
 
 case class SchemaRegistry(url: String, auth: String)
-case class Topics(inbound: String, outbound: String)
+case class Topics(inbound: String, outbound: String, repFactor: Int)
 case class Sasl(user: String, password: String)
 case class KafkaConfig(id: String,
                        group: String,
@@ -34,26 +34,30 @@ trait KafkaProps {
   val kafkaConfig: KafkaConfig
 
   val kafkaProperties: Properties = {
-    println(
-      s"""org.apache.kafka.common.security.plain.PlainLoginModule required username="\${kafkaConfig.sasl.user}" password="\${kafkaConfig.sasl.password}";"""
-    )
+
     val p = new Properties()
     //    p.put(StreamsConfig.APPLICATION_ID_CONFIG, "demo-application" + Calendar.getInstance.getTimeInMillis)
     p.put("application.id", kafkaConfig.id)
     p.put("group.id", kafkaConfig.group)
-    p.put("ssl.endpoint.identification.algorithm", "https")
-    p.put("sasl.mechanism", "PLAIN")
+
+
     p.put("bootstrap.servers", kafkaConfig.bootstrapServer)
     p.put("request.timeout.ms", kafkaConfig.requestTimeoutMs)
     p.put("retry.backoff.ms", "500")
-    p.put("security.protocol", "SASL_SSL")
-    p.put(
-      "sasl.jaas.config",
-      s"""org.apache.kafka.common.security.plain.PlainLoginModule required username="\${kafkaConfig.sasl.user}" password="\${kafkaConfig.sasl.password}";"""
-    )
+    if(kafkaConfig.sasl.user != null && kafkaConfig.sasl.user.nonEmpty){
+      p.put("ssl.endpoint.identification.algorithm", "https")
+      p.put("sasl.mechanism", "PLAIN")
+      p.put("security.protocol", "SASL_SSL")
+      p.put(
+        "sasl.jaas.config",
+        s"""org.apache.kafka.common.security.plain.PlainLoginModule required username="${kafkaConfig.sasl.user}" password="${kafkaConfig.sasl.password}";"""
+      )
+    }
 
-    p.put("basic.auth.credentials.source", "USER_INFO")
-    p.put("basic.auth.user.info", kafkaConfig.schemaRegistry.auth)
+    if(kafkaConfig.schemaRegistry.auth != null && kafkaConfig.schemaRegistry.auth.nonEmpty){
+      p.put("basic.auth.credentials.source", "USER_INFO")
+      p.put("basic.auth.user.info", kafkaConfig.schemaRegistry.auth)
+    }
     p.put(
       AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
       kafkaConfig.schemaRegistry.url

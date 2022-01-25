@@ -44,7 +44,7 @@ object Main extends IOApp with KafkaProps {
   private val log = LoggerFactory.getLogger(this.getClass)
 
   implicit val client: AdminClient = AdminClient.create(kafkaProperties)
-  manageTopics(kafkaConfig.topics)
+  manageTopics(kafkaConfig.topics, kafkaConfig.topics.repFactor)
 
   val builder = new StreamsBuilder()
 

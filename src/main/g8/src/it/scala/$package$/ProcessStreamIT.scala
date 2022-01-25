@@ -11,7 +11,7 @@ import $package$.config.Config
 import $package$.utils.KafkaUtils
 import org.apache.kafka.clients.admin.AdminClient
 import org.slf4j.LoggerFactory
-import $package$.avro.Address
+import $package$.avro.{Address, AddressEnriched}
 import collection.JavaConverters._
 
 class ProcessStreamIT extends AnyFlatSpec with Matchers with KafkaProps {
@@ -26,11 +26,11 @@ class ProcessStreamIT extends AnyFlatSpec with Matchers with KafkaProps {
 
     implicit val client = AdminClient.create(kafkaProps)
 
-    KafkaUtils.createTopicIfNotExists(kafkaConfig.topics.inbound, 6, 3)
+    KafkaUtils.createTopicIfNotExists(kafkaConfig.topics.inbound, 6, kafkaConfig.topics.repFactor)
 
     val inputData = Address("wef", "wef")
 
-    val expectedOutput = Address("wef", "wef")// Add your expected output here
+    val expectedOutput = AddressEnriched("wef", "wef", "NEW FIELD")// Add your expected output here
 
     val testStream = Main.streams
 

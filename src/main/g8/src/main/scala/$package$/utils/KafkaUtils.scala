@@ -35,9 +35,9 @@ object KafkaUtils {
       .containsKey(topic)
   }
 
-  def manageTopics(topics: Topics)(implicit client: AdminClient): Unit = {
+  def manageTopics(topics: Topics, repFactor: Int)(implicit client: AdminClient): Unit = {
     if (!checkTopicExists(topics.inbound))
       throw new RuntimeException(s"Topic \${topics.inbound} does not exist.")
-    createTopicIfNotExists(topics.outbound, 6, 3)
+    createTopicIfNotExists(topics.outbound, 6, repFactor)
   }
 }

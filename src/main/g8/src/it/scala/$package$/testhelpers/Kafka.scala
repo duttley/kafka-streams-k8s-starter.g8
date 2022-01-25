@@ -28,15 +28,17 @@ object Kafka extends KafkaProps {
     producer.close()
   }
 
-  def readFromKafka(): Address = {
+  def readFromKafka(): AddressEnriched = {
+
+    kafkaProperties.put("application.id", "ProcessStreamConsumer")
+    kafkaProperties.put("group.id", "ProcessStreamConsumerGroup")
     val kafkaConsumer =
-      new KafkaConsumer[String, Address](kafkaProperties)
+      new KafkaConsumer[String, AddressEnriched](kafkaProperties)
     kafkaConsumer.subscribe(
       Collections.singletonList(kafkaConfig.topics.outbound))
 
     val results = kafkaConsumer.poll(Duration.ofMillis(50000)).asScala
     kafkaConsumer.close
-    println()
     results.head.value()
   }
 }
