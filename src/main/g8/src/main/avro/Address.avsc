@@ -1,0 +1,15 @@
+{
+  "fields": [
+    {
+      "name": "line",
+      "type": "string"
+    },
+    {
+      "name": "postcode",
+      "type": "string"
+    }
+  ],
+  "name": "Address",
+  "namespace": "com.du.avro",
+  "type": "record"
+}

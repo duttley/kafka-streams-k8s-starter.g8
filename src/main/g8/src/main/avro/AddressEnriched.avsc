@@ -1,0 +1,19 @@
+{
+  "fields": [
+    {
+      "name": "line",
+      "type": "string"
+    },
+    {
+      "name": "postcode",
+      "type": "string"
+    },
+    {
+          "name": "newfield",
+          "type": "string"
+        }
+  ],
+  "name": "AddressEnriched",
+  "namespace": "com.du.avro",
+  "type": "record"
+}
