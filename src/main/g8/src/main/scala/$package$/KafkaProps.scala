@@ -50,7 +50,7 @@ trait KafkaProps {
       p.put("security.protocol", "SASL_SSL")
       p.put(
         "sasl.jaas.config",
-        s"""org.apache.kafka.common.security.plain.PlainLoginModule required username="${kafkaConfig.sasl.user}" password="${kafkaConfig.sasl.password}";"""
+        s"""org.apache.kafka.common.security.plain.PlainLoginModule required username="\${kafkaConfig.sasl.user}" password="\${kafkaConfig.sasl.password}";"""
       )
     }
 
