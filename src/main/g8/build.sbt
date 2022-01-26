@@ -41,9 +41,9 @@ scalacOptions ++= Seq(
   "-language:implicitConversions"
 )
 
-sourceGenerators in Compile += (avroScalaGenerateSpecific in Compile).taskValue
+Compile / sourceGenerators += (Compile / avroScalaGenerateSpecific).taskValue
 
-assemblyMergeStrategy in assembly := {
+assembly / assemblyMergeStrategy := {
   case x if Assembly.isConfigFile(x) =>
     MergeStrategy.concat
   case PathList(ps @ _*) if Assembly.isReadme(ps.last) || Assembly.isLicenseFile(ps.last) =>

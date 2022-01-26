@@ -10,6 +10,6 @@
     }
   ],
   "name": "Address",
-  "namespace": "com.du.avro",
+  "namespace": "$package$.avro",
   "type": "record"
 }
